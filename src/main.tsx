@@ -1,6 +1,8 @@
-import './shared/lib/jsx/global';
+import { render } from '@/shared/lib/jsx';
 
-import { App } from '@/app';
-import { render } from '@/shared/lib/jsx/runtime';
+import { App } from './app';
 
-render(App, document.getElementById('root')!);
+const root = document.getElementById('root');
+if (root) {
+    render(<App />, root);
+}

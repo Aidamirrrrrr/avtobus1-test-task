@@ -1,22 +1,29 @@
-import type { createElement as _createElement } from '@/shared/lib/jsx/runtime';
-import type { ButtonProps, Props, VNode } from '@/shared/lib/jsx/types';
+import type * as HtmlJSX from 'html-jsx';
+
+import type { VNode, WithChildren } from '@/shared/lib/jsx/jsx-types';
 
 declare global {
-    const createElement: typeof _createElement;
-
-    interface Window {
-        createElement: typeof _createElement;
-    }
-
     namespace JSX {
-        type Element = VNode;
+        /**
+         * Тип возвращаемого значения JSX-выражения — виртуальный DOM-узел.
+         */
+        export type Element = VNode;
 
-        interface IntrinsicElements {
-            div: Props;
-            h1: Props;
-            p: Props;
-            span: Props;
-            button: ButtonProps;
-        }
+        /**
+         * Шаблон типа для кастомных HTML-элементов с дефисом в имени, например "my-button".
+         */
+        type CustomElement = `${string}-${string}`;
+
+        /**
+         * Описание встроенных (intrinsic) JSX-элементов.
+         *
+         * - Для всех стандартных HTML-тегов из `html-jsx` добавляем поддержку children через `WithChildren`.
+         * - Для кастомных элементов с дефисом разрешены произвольные пропсы с children.
+         */
+        export type IntrinsicElements = {
+            [K in keyof HtmlJSX.IntrinsicElements]: WithChildren<HtmlJSX.IntrinsicElements[K]>;
+        } & {
+            [K in CustomElement]?: WithChildren<object>;
+        };
     }
 }

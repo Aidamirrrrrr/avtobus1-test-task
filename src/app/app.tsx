@@ -1,11 +1,9 @@
-export const App = (
-    <div className="container">
-        <Hello name="Айдамир" />
-        <p>JSX без React</p>
-        <button onClick={(e) => console.log('hello', e.target)}>hello</button>
+export const App = () => (
+    <div class="container">
+        <Hello name="Aidamir" />
+        <p>Strictly typed and minimal.</p>
+        <button onclick={() => alert('Clicked!')}>Click me</button>
     </div>
 );
 
-export function Hello({ name }: { name: string }) {
-    return <h1>Привет, {name}!</h1>;
-}
+const Hello = ({ name }: { name: string }) => <h1>Hello, {name}</h1>;

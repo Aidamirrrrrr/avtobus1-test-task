@@ -7,9 +7,9 @@
     "skipLibCheck": true,
 
     /* JSX */
-    "jsx": "react",
-    "jsxFactory": "createElement",
-    "jsxFragmentFactory": "Fragment",
+    "types": ["html-jsx"],
+    "jsx": "react-jsx",
+    "jsxImportSource": "@/shared/lib/jsx",
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -28,7 +28,7 @@
 
     "baseUrl": "./",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["src/*"],
     }
   },
   "include": ["src", "vite.config.ts"]

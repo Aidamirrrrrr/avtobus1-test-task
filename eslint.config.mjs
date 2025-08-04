@@ -44,6 +44,7 @@ export default tseslint.config(
                     ],
                 },
             ],
+            'simple-import-sort/exports': 'error',
 
             'import/extensions': [
                 'error',
@@ -64,6 +65,33 @@ export default tseslint.config(
                 },
             ],
 
+            '@typescript-eslint/member-ordering': ['error', {
+                default: [
+                    'public-static-field',
+                    'protected-static-field',
+                    'private-static-field',
+
+                    'public-static-method',
+                    'protected-static-method',
+                    'private-static-method',
+
+                    'public-instance-field',
+                    'protected-instance-field',
+                    'private-instance-field',
+
+                    'public-constructor',
+                    'protected-constructor',
+                    'private-constructor',
+
+                    'public-instance-method',
+                    'protected-instance-method',
+                    'private-instance-method',
+                ],
+            }],
+
+            '@typescript-eslint/explicit-member-accessibility': ['error', {
+                accessibility: 'explicit',
+            }],
             '@typescript-eslint/no-explicit-any': 'off',
             '@typescript-eslint/no-floating-promises': 'warn',
             '@typescript-eslint/no-unsafe-argument': 'warn',
