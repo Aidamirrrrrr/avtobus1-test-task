@@ -1,9 +1,10 @@
 import type * as HtmlJSX from 'html-jsx';
 
 /**
- * Один дочерний элемент виртуального DOM: VNode, текст, число или null/undefined.
+ * Один дочерний элемент виртуального DOM: VNode, текст, число, boolean или null/undefined.
+ * Boolean значения игнорируются при рендеринге (как в React).
  */
-export type Child = VNode | string | number | null | undefined;
+export type Child = VNode | string | number | boolean | null | undefined;
 
 /**
  * Один или массив дочерних элементов.
@@ -12,11 +13,11 @@ export type Children = Child | Child[];
 
 /**
  * Тип функционального компонента (Function Component).
- * Принимает пропсы с опциональным children и возвращает VNode.
+ * Принимает пропсы с опциональным children и возвращает JSX элемент.
  *
  * @template P - Тип пропсов компонента.
  */
-export type FC<P = Record<string, unknown>> = (props: P & { children?: Children }) => VNode;
+export type FC<P = Record<string, unknown>> = (props: P & { children?: Children }) => Child;
 
 /**
  * Тип узла виртуального DOM:
@@ -64,9 +65,9 @@ type DevProps = {
 /**
  * Объединяет переданный тип пропсов с поддержкой children.
  *
- * @template T - Тип узла (строка или FC).
+ * @template T - Тип пропсов.
  */
-type WithChildren<T> = T & { children?: Children };
+export type WithChildren<T> = T & { children?: Children };
 
 /**
  * Тип пропсов для узла:

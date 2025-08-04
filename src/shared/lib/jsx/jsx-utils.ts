@@ -1,12 +1,11 @@
-import type { Children } from './jsx-types';
+/**
+ * @fileoverview JSX utilities: normalizeChildren, isFC, isUnknownHtmlTag
+ */
+
+import type { Children, FC, VNodeType } from './jsx-types';
 
 /**
- * Нормализует дочерние элементы, всегда возвращая массив.
- * Если передан один элемент, оборачивает его в массив.
- * Если undefined — возвращает пустой массив.
- *
- * @param {Children} children — дочерние элементы (массив или одиночный элемент).
- * @returns {Children} — нормализованные дочерние элементы в виде массива или пустого массива.
+ * Нормализует children в массив
  */
 export function normalizeChildren(children: Children): Children {
     if (Array.isArray(children)) return children;
@@ -14,11 +13,14 @@ export function normalizeChildren(children: Children): Children {
 }
 
 /**
- * Проверяет, является ли переданный тег неизвестным HTML-элементом.
- * Возвращает true, если создаётся HTMLUnknownElement и тег не содержит дефиса (не кастомный элемент).
- *
- * @param {string} tag — имя HTML-тега.
- * @returns {boolean} — true, если тег неизвестен браузеру.
+ * Type guard для функциональных компонентов
+ */
+export function isFC(value: VNodeType): value is FC {
+    return typeof value === 'function';
+}
+
+/**
+ * Проверяет является ли HTML тег неизвестным
  */
 export function isUnknownHtmlTag(tag: string): boolean {
     const el = document.createElement(tag);

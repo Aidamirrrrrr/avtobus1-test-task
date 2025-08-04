@@ -56,6 +56,7 @@ export default tseslint.config(
                     tsx: 'never',
                 },
             ],
+            'import/no-unresolved': ['error', { ignore: ['^jsx$', '^jsx/', '^@/'] }],
 
             '@typescript-eslint/consistent-type-imports': [
                 'error',
@@ -96,6 +97,15 @@ export default tseslint.config(
             '@typescript-eslint/no-floating-promises': 'warn',
             '@typescript-eslint/no-unsafe-argument': 'warn',
             '@typescript-eslint/no-unsafe-call': 'warn',
+            '@typescript-eslint/no-unsafe-assignment': 'warn',
+            '@typescript-eslint/no-unsafe-return': 'warn',
+
+            '@typescript-eslint/naming-convention': ['error', {
+                selector: 'method',
+                modifiers: ['private'],
+                format: ['camelCase'],
+                leadingUnderscore: 'require',
+            }],
         },
 
         settings: {

@@ -29,6 +29,8 @@
     "baseUrl": "./",
     "paths": {
       "@/*": ["src/*"],
+      "jsx": ["src/shared/lib/jsx"],
+      "jsx/*": ["src/shared/lib/jsx/*"]
     }
   },
   "include": ["src", "vite.config.ts"]

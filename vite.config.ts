@@ -11,6 +11,7 @@ export default defineConfig(({ mode }) => {
         resolve: {
             alias: {
                 '@': path.resolve(import.meta.dirname, './src'),
+                jsx: path.resolve(import.meta.dirname, './src/shared/lib/jsx'),
             },
         },
         server: {

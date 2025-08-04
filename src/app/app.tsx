@@ -1,9 +1,11 @@
-export const App = () => (
-    <div class="container">
-        <Hello name="Aidamir" />
-        <p>Strictly typed and minimal.</p>
-        <button onclick={() => alert('Clicked!')}>Click me</button>
-    </div>
-);
+import { Fragment } from 'jsx';
 
-const Hello = ({ name }: { name: string }) => <h1>Hello, {name}</h1>;
+import { Counter } from '@/shared/components/counter';
+
+export const App = () => {
+    return (
+        <Fragment>
+            <Counter initialValue={5} step={2} />
+        </Fragment>
+    );
+};

@@ -1,19 +1,26 @@
+/**
+ * @fileoverview Virtual DOM renderer
+ */
+
 import { isEventListener } from '@/shared/utils/dom-utils';
 
+import { _internal } from './hooks';
 import { Fragment } from './jsx-runtime';
 import type { VNode } from './jsx-types';
 import { isUnknownHtmlTag } from './jsx-utils';
 
+let isRenderFunctionSet = false;
+
 /**
- * Рекурсивно рендерит виртуальный DOM (VNode) в реальный DOM-контейнер.
- *
- * @param {VNode | string | number | null | undefined} vNode — виртуальный узел или текст/число для рендера.
- * @param {HTMLElement} container — DOM-элемент-контейнер, куда будет добавлен результат.
- *
- * @throws {Error} — если в режиме разработки (DEV) встречается неизвестный HTML-тег.
+ * Рендерит VNode в DOM
  */
-export function render(vNode: VNode | string | number | null | undefined, container: HTMLElement): void {
-    if (vNode == null) return;
+export function render(vNode: VNode | string | number | boolean | null | undefined, container: HTMLElement, isRerender = false): void {
+    if (!isRenderFunctionSet) {
+        _internal.setRenderFunction(render);
+        isRenderFunctionSet = true;
+    }
+
+    if (vNode == null || typeof vNode === 'boolean') return;
 
     if (typeof vNode === 'string' || typeof vNode === 'number') {
         container.appendChild(document.createTextNode(String(vNode)));
@@ -23,15 +30,36 @@ export function render(vNode: VNode | string | number | null | undefined, contai
     if (vNode.type === Fragment) {
         const children = vNode.props.children;
         if (Array.isArray(children)) {
-            for (const child of children) render(child, container);
+            for (const child of children) render(child, container, isRerender);
         } else {
-            render(children, container);
+            render(children, container, isRerender);
         }
         return;
     }
 
     if (typeof vNode.type === 'function') {
-        render(vNode.type(vNode.props), container);
+        if (isRerender) {
+            _internal.setCurrentComponent(vNode.type, container, vNode);
+
+            try {
+                const result = vNode.type(vNode.props);
+
+                render(result, container, false);
+            } finally {
+                _internal.clearCurrentComponent();
+            }
+        } else {
+            _internal.setCurrentComponent(vNode.type, container, vNode);
+
+            try {
+                const result = vNode.type(vNode.props);
+
+                render(result, container, false);
+            } finally {
+                _internal.clearCurrentComponent();
+            }
+        }
+
         return;
     }
 
@@ -39,8 +67,8 @@ export function render(vNode: VNode | string | number | null | undefined, contai
         const { __source: source = {} } = vNode.props;
         const { fileName, lineNumber } = source;
 
-        const loc = fileName && lineNumber ? `${fileName}:${lineNumber}` : 'unknown location';
-        throw new Error(`Unknown HTML tag <${vNode.type}> at ${loc}`);
+        const loc = fileName && lineNumber ? `${fileName}:${lineNumber}` : 'неизвестное местоположение';
+        throw new Error(`Неизвестный HTML тег <${vNode.type}> в ${loc}`);
     }
 
     const el = document.createElement(vNode.type);
@@ -58,9 +86,9 @@ export function render(vNode: VNode | string | number | null | undefined, contai
 
     const { children } = vNode.props;
     if (Array.isArray(children)) {
-        for (const child of children) render(child, el);
+        for (const child of children) render(child, el, isRerender);
     } else if (children != null) {
-        render(children, el);
+        render(children, el, isRerender);
     }
 
     container.appendChild(el);

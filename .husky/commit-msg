@@ -5,11 +5,11 @@ commit_msg=$(cat $1)
 clean_msg=$(echo "$commit_msg" | sed -E 's/^(feat|fix|docs|style|refactor|test|chore)(\([^)]*\))?:\s*//')
 
 if echo "$clean_msg" | grep -q '[а-яё]'; then
-    echo "Error: Commit message must be in English"
-    echo "Tip: Use English words for commit messages"
+    echo "Ошибка: Сообщение коммита должно быть на английском языке"
+    echo "Совет: Используйте английские слова для сообщений коммитов"
     echo ""
-    echo "Your message: $commit_msg"
+    echo "Ваше сообщение: $commit_msg"
     exit 1
 fi
 
-echo "Commit message language check passed"
+echo "Проверка языка сообщения коммита прошла успешно"
