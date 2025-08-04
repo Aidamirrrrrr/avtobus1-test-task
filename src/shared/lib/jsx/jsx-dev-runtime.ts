@@ -1,7 +1,3 @@
-/**
- * @fileoverview JSX Dev Runtime with debug info
- */
-
 import type { Props, VNode, VNodeType } from './jsx-types';
 
 /**

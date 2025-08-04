@@ -1,8 +1,4 @@
-/**
- * @fileoverview JSX utilities: normalizeChildren, isFC, isUnknownHtmlTag
- */
-
-import type { Children, FC, VNodeType } from './jsx-types';
+import type { Children } from './jsx-types';
 
 /**
  * Нормализует children в массив
@@ -10,13 +6,6 @@ import type { Children, FC, VNodeType } from './jsx-types';
 export function normalizeChildren(children: Children): Children {
     if (Array.isArray(children)) return children;
     return children !== undefined ? [children] : [];
-}
-
-/**
- * Type guard для функциональных компонентов
- */
-export function isFC(value: VNodeType): value is FC {
-    return typeof value === 'function';
 }
 
 /**

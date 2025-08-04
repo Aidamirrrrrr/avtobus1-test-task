@@ -1,7 +1,3 @@
-/**
- * @fileoverview JSX Runtime функции: jsx, jsxs, Fragment
- */
-
 import type { Children, Props, VNode, VNodeType } from './jsx-types';
 import { normalizeChildren } from './jsx-utils';
 
