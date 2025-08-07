@@ -35,6 +35,9 @@ export default tseslint.config(
                 'error',
                 {
                     groups: [
+                        ['^.+\\.s?css$'],
+                        ['^import\\s+type\\s+.*\\s+from\\s+[\'"]@?\\w'],
+                        ['^import\\s+type\\s+'],
                         ['^\\u0000'],
                         ['^(assert|buffer|child_process|cluster|crypto|fs|http|https|net|os|path|process|stream|timers|tty|url|util|zlib)(/.*|$)'],
                         ['^@?\\w'],
@@ -44,6 +47,8 @@ export default tseslint.config(
                     ],
                 },
             ],
+
+
             'simple-import-sort/exports': 'error',
 
             'import/extensions': [
@@ -56,7 +61,7 @@ export default tseslint.config(
                     tsx: 'never',
                 },
             ],
-            'import/no-unresolved': ['error', { ignore: ['^jsx$', '^jsx/', '^@/'] }],
+            'import/no-unresolved': ['error', { ignore: ['^jsx$', '^jsx/', '^@/', '^virtual:'] }],
 
             '@typescript-eslint/consistent-type-imports': [
                 'error',

@@ -1,6 +1,7 @@
 import path from 'path';
 
 import { defineConfig } from 'vite';
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
 
 import { loadValidatedEnv } from './src/shared/config/env/vite';
 
@@ -22,5 +23,12 @@ export default defineConfig(({ mode }) => {
             port: env.VITE_PREVIEW_PORT,
             open: true,
         },
+        plugins: [
+            createSvgIconsPlugin({
+                iconDirs: [path.resolve(__dirname, 'src/shared/icons')],
+                symbolId: 'icon-[name]',
+                inject: 'body-last',
+            }),
+        ],
     };
 });

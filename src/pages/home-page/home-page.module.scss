@@ -1,0 +1,13 @@
+@use "@/shared/styles/functions" as *;
+
+.main {
+    padding-top: rem(24);
+
+    &__add_contact_button {
+        display: none;
+
+        @media (max-width: 768px) {
+            display: block;
+        }
+    }
+}

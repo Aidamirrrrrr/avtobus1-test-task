@@ -2,12 +2,12 @@ import { isEventListener } from '@/shared/utils/dom-utils';
 
 import { Fragment } from './jsx-runtime';
 import type { VNode } from './jsx-types';
-import { isUnknownHtmlTag } from './jsx-utils';
+import { createElement, isUnknownHtmlTag, isValidAttributeValue } from './jsx-utils';
 
 /**
  * Рендерит VNode в DOM
  */
-export function render(vNode: VNode | string | number | boolean | null | undefined, container: HTMLElement): void {
+export function render(vNode: VNode | string | number | boolean | null | undefined, container: Element): void {
     if (vNode == null || typeof vNode === 'boolean') return;
 
     if (typeof vNode === 'string' || typeof vNode === 'number') {
@@ -27,7 +27,13 @@ export function render(vNode: VNode | string | number | boolean | null | undefin
 
     if (typeof vNode.type === 'function') {
         const result = vNode.type(vNode.props);
-        render(result, container);
+
+        if (Array.isArray(result)) {
+            for (const child of result) render(child, container);
+        } else {
+            render(result, container);
+        }
+
         return;
     }
 
@@ -38,15 +44,17 @@ export function render(vNode: VNode | string | number | boolean | null | undefin
         throw new Error(`Неизвестный HTML тег <${vNode.type}> в ${loc}`);
     }
 
-    const el = document.createElement(vNode.type);
+    const el = createElement(vNode.type);
 
     for (const [key, value] of Object.entries(vNode.props)) {
-        if (key === 'children' || key.startsWith('__')) continue;
+        if (key === 'children' || key.startsWith('__') || value === undefined || value === null) {
+            continue;
+        }
 
         if (key.startsWith('on') && isEventListener(value)) {
             const event = key.slice(2);
             el.addEventListener(event, value);
-        } else {
+        } else if (isValidAttributeValue(value)) {
             el.setAttribute(key, String(value));
         }
     }

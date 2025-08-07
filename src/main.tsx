@@ -1,3 +1,5 @@
+import 'virtual:svg-icons-register';
+
 import { render } from '@/shared/lib/jsx';
 
 import { App } from './app';

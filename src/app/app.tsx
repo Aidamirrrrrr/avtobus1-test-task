@@ -1,7 +1,16 @@
+import { Fragment } from 'jsx';
+
+import { HomePage } from '@/pages/home-page';
+import { RouterProvider } from '@/shared/lib/router/router-provider';
+
+export const routes = {
+    '/': HomePage,
+};
+
 export const App = () => {
     return (
-        <div>
-            hello <button onclick={() => alert('hello')}>hello</button>
-        </div>
+        <Fragment>
+            <RouterProvider routes={routes} />
+        </Fragment>
     );
 };

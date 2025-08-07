@@ -1,0 +1,30 @@
+@use "@/shared/styles/functions" as *;
+
+.popup__overlay {
+  opacity: 0;
+  pointer-events: none; // чтобы клики игнорировались, когда закрыт
+  transition: opacity 0.3s ease;
+
+  &.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.popup {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+
+  &.active {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.groupsPopup {
+  &__footer {
+    gap: rem(12);
+    display: flex;
+  }
+}

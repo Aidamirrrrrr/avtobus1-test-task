@@ -1,0 +1,24 @@
+@use "@/shared/styles/functions" as *;
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding-block: rem(16);
+  background-color: var(--white-color);
+  box-shadow: var(--shadow-black-5);
+
+  &__container {
+    gap: rem(16);
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+  }
+
+  &__add_contact_button {
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+}

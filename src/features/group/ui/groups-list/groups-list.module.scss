@@ -1,0 +1,7 @@
+@use "@/shared/styles/functions" as *;
+
+.groupsList {
+  gap: rem(16);
+  display: flex;
+  flex-direction: column;
+}

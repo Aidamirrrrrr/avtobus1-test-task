@@ -1,0 +1,16 @@
+@use "@/shared/styles/functions" as *;
+
+.groupItem {
+  gap: rem(12);
+  display: flex;
+  align-items: center;
+
+  &__field {
+    flex: 1 1 auto;
+  }
+
+  &__btnIcon {
+    width: rem(25);
+    height: rem(25);
+  }
+}

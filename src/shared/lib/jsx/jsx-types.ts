@@ -17,7 +17,7 @@ export type Children = Child | Child[];
  *
  * @template P - Тип пропсов компонента.
  */
-export type FC<P = Record<string, unknown>> = (props: P & { children?: Children }) => Child;
+export type FC<P = Record<string, unknown>> = (props: P & { children?: Children }) => Children;
 
 /**
  * Тип узла виртуального DOM:

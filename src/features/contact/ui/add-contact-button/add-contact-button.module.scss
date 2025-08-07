@@ -1,0 +1,12 @@
+@use "@/shared/styles/functions" as *;
+
+.btn {
+  &_fullWidth {
+    width: 100%;
+  }
+
+  &__icon {
+    width: rem(18);
+    height: rem(18);
+  }
+}
